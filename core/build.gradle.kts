@@ -5,7 +5,7 @@ plugins {
 val nms = project(":nms").subprojects
 
 dependencies {
-    compileOnly(project(":modelengine:legacy"))
+
     compileOnly(project(":modelengine:current"))
     nms.forEach { compileOnly(it) }
 

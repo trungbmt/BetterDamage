@@ -43,6 +43,6 @@ include(
     "nms:v1_21_R7",
     "nms:v26_R1",
 
-    "modelengine:legacy",
+
     "modelengine:current",
 )
