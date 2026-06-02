@@ -1,7 +1,6 @@
 package kr.toxicity.damage.compatibility.modelengine
 
 import com.ticxo.modelengine.api.ModelEngineAPI
-import com.ticxo.modelengine.api.generator.model.BlueprintBone
 import kr.toxicity.damage.api.adapter.ModelAdapter
 import net.jodah.expiringmap.ExpirationPolicy
 import net.jodah.expiringmap.ExpiringMap
@@ -20,15 +19,8 @@ class LegacyModelEngineAdapter : ModelAdapter {
         return ModelEngineAPI.getModeledEntity(entity.uniqueId)?.run {
             models.values.maxOfOrNull {
                 blueprintCache.computeIfAbsent(it.blueprint.name) { _ ->
-                    fun getChildren(blueprint: BlueprintBone): Double {
-                        val children: Set<BlueprintBone> = blueprint.children
-                        return if (children.isEmpty()) blueprint.globalOrigin.y
-                        else children.maxOf { bb ->
-                            getChildren(bb)
-                        }
-                    }
                     it.blueprint.bones.values.maxOfOrNull { bb ->
-                        getChildren(bb)
+                        bb.globalOrigin.y
                     } ?: 0.0
                 }
             }
