@@ -19,10 +19,10 @@ class LegacyModelEngineAdapter : ModelAdapter {
     override fun height(entity: Entity): Double? {
         return ModelEngineAPI.getModeledEntity(entity.uniqueId)?.run {
             models.values.maxOfOrNull {
-                blueprintCache.computeIfAbsent(it.blueprint.modelId) { _ ->
+                blueprintCache.computeIfAbsent(it.blueprint.name) { _ ->
                     fun getChildren(blueprint: BlueprintBone): Double {
-                        val children: Set<BlueprintBone>? = blueprint.children
-                        return if (children.isNullOrEmpty()) blueprint.globalOrigin.y
+                        val children: Set<BlueprintBone> = blueprint.children
+                        return if (children.isEmpty()) blueprint.globalOrigin.y
                         else children.maxOf { bb ->
                             getChildren(bb)
                         }
